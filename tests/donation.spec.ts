@@ -5,7 +5,7 @@ test('donation page assertions', async ({ page }) => {
   await page.goto(testURL);
 
   // Expect a title "to contain" the substring "Donate - QA Interview Test Org".
-  await expect(page).toHaveTitle(/Donate - QA Interview Test Org/);
+  await expect(page).toHaveTitle("Donate - QA Interview");
 
 });
 
@@ -16,8 +16,8 @@ test('top navigation', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Log in' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Give' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Interview Test Org' })).toBeVisible();
-  await page.getByRole('link', { name: 'Interview Test Org'} ).screenshot({path: 'testingLogo.png'})
+  await expect(page.getByRole('link', { name: 'QA Interview' })).toBeVisible();
+  
 });
 test('give One time', async ({ page }) => {
   await page.goto(testURL);
@@ -34,9 +34,10 @@ test('give One time', async ({ page }) => {
   await page.getByPlaceholder('Last name').fill('Abdou')
   await page.getByRole('button', { name: 'Continue' }).click();
   const stripeFrame = page.frameLocator('iframe').first();
-  await stripeFrame.getByPlaceholder('1234 1234 1234 1234').click();
+  await page.getByRole('combobox').nth(1).selectOption('visa');
+  
   await stripeFrame.getByPlaceholder('1234 1234 1234 1234').fill('4242 4242 4242 4242');
-  await stripeFrame.getByPlaceholder('MM / YY').click();
+  
   await stripeFrame.getByPlaceholder('MM / YY').fill('12/26');
   await stripeFrame.getByPlaceholder('CVC').fill('345');
   await stripeFrame.getByPlaceholder('12345').fill('12345');
